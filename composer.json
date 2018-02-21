@@ -1,0 +1,20 @@
+{
+    "name": "batmahir/laravel-mongodb-queue-driver",
+    "description": "Laravel 5 mongodb queue driver",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bathulah Mahir",
+            "email": "bathulahmahir@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "illuminate/support": "^5.7@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Batmahir\\MongoDbQueueDriver\\": "src"
+        }
+    }
+}
