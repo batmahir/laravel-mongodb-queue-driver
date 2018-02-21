@@ -4,17 +4,46 @@ namespace Batmahir\MongoDbQueueDriver;
 
 use Illuminate\Support\ServiceProvider;
 
-class RiakServiceProvider extends ServiceProvider
+class MongoDbQueueDriverServiceProvider extends ServiceProvider
 {
+
     /**
-     * Register bindings in the container.
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = true;
+
+
+    /**
+     * Bootstrap the application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        //
+    }
+
+    /**
+     * Register the application services.
      *
      * @return void
      */
     public function register()
     {
-        $this->app->singleton(Connection::class, function ($app) {
-            return new Connection(config('riak'));
+        $this->app->singleton(MongoDbQueue::class, function ($app) {
+            return new MongoDbQueue();
         });
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return [MongoDbQueue::class];
     }
 }
