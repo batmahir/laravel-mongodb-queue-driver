@@ -2,10 +2,10 @@
 
 namespace Batmahir\MongoDbQueueDriver;
 
-class MongoDbQueue
+class MongoDbQueue extends MongoDbQueueDriver
 {
     public function __construct()
     {
-
+        parent::__construct();
     }
 }

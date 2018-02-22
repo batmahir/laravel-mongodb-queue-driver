@@ -6,15 +6,6 @@ use Illuminate\Support\ServiceProvider;
 
 class MongoDbQueueDriverServiceProvider extends ServiceProvider
 {
-
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
-
-
     /**
      * Bootstrap the application services.
      *
@@ -22,7 +13,15 @@ class MongoDbQueueDriverServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+
+        $manager = $this->app['queue'];
+
+        dd($this->app['queue']);
+
+        $manager->addConnector('mongodb-queue', function()
+        {
+            return new MongoDbConnector;
+        });
     }
 
     /**
@@ -37,13 +36,5 @@ class MongoDbQueueDriverServiceProvider extends ServiceProvider
         });
     }
 
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return [MongoDbQueue::class];
-    }
+
 }
