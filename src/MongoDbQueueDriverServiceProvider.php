@@ -13,14 +13,11 @@ class MongoDbQueueDriverServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
         $manager = $this->app['queue'];
-
-        dd($this->app['queue']);
 
         $manager->addConnector('mongodb-queue', function()
         {
-            return new MongoDbConnector;
+            return new MongoDbConnector($this->app['db']);
         });
     }
 
@@ -32,7 +29,7 @@ class MongoDbQueueDriverServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(MongoDbQueue::class, function ($app) {
-            return new MongoDbQueue();
+            return new MongoDbQueue;
         });
     }
 

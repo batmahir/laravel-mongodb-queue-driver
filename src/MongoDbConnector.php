@@ -1,10 +1,9 @@
 <?php
-
 namespace Batmahir\MongoDbQueueDriver;
 
+use Illuminate\Queue\DatabaseQueue;
 use Illuminate\Database\ConnectionResolverInterface;
 use Illuminate\Queue\Connectors\ConnectorInterface;
-use Illuminate\Support\Arr;
 
 class MongoDbConnector implements ConnectorInterface
 {
@@ -18,7 +17,8 @@ class MongoDbConnector implements ConnectorInterface
     /**
      * Create a new connector instance.
      *
-     * @param  \Illuminate\Database\ConnectionResolverInterface $connections
+     * @param  \Illuminate\Database\ConnectionResolverInterface  $connections
+     * @return void
      */
     public function __construct(ConnectionResolverInterface $connections)
     {
@@ -28,16 +28,18 @@ class MongoDbConnector implements ConnectorInterface
     /**
      * Establish a queue connection.
      *
-     * @param  array $config
+     * @param  array  $config
      * @return \Illuminate\Contracts\Queue\Queue
      */
     public function connect(array $config)
     {
-        return new MongoQueue(
-            $this->connections->connection(Arr::get($config, 'connection')),
+        return new MongoDbQueue(
+            $this->connections->connection($config['connection'] ?? null),
             $config['table'],
             $config['queue'],
-            Arr::get($config, 'expire', 60)
+            $config['retry_after'] ?? 60
         );
     }
 }
+
+
